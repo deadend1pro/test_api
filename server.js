@@ -1,9 +1,8 @@
 import express from "express";
 
-
 const PORT = 3000;
 const app = express();
-
+const environment = process.env.NODE_ENV;
 
 app.get("/", (req, res) => {
   res.json("welcome");
@@ -20,5 +19,9 @@ app.get("/greeting", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`The server is listening on http://localhost:${PORT}`);
+  if (environment === "development") {
+    console.log(`The server is listening on http://localhost:${PORT}`);
+  } else {
+    console.log("server running on production");
+  }
 });
