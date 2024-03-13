@@ -1,6 +1,6 @@
 import express from "express";
 
-const {HOST, PORT, API_KEY} = process.env;
+const { PORT, API_KEY } = process.env;
 const app = express();
 const environment = process.env.NODE_ENV;
 
@@ -18,12 +18,15 @@ app.get("/greeting", (req, res) => {
   res.json({ value: greetings[greetingsindex] });
 });
 
-app.get("/game/:today", async (req, res) => {
+app.get("/weather/:location", async (req, res) => {
   const response = await fetch(
-    `https://rawg.io/@breathnach/apikey=${req.params.location}&apikey=${API_KEY}`
+    `https://api.tomorrow.io/v4/weather/forecast?location=${req.params.location}&apikey=${API_KEY}`
   );
   const data = await response.json();
-  res.send("Current GAME: " + data.timelines.minutely[0].values);
+  res.send(
+    "Current temperature: " + data.timelines.minutely[0].values.temperature
+  );
+  // res.json(data);
 });
 
 app.listen(PORT, () => {
