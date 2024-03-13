@@ -1,7 +1,6 @@
 import express from "express";
 
-const PORT = process.env.PORT;
-const API_KEY = process.env.API_KEY;
+const {HOST, PORT, API_KEY} = process.env;
 const app = express();
 const environment = process.env.NODE_ENV;
 
@@ -26,6 +25,7 @@ app.get("/game/:today", async (req, res) => {
   const data = await response.json();
   res.send("Current GAME: " + data.timelines.minutely[0].values);
 });
+
 app.listen(PORT, () => {
   if (environment === "development") {
     console.log(`The server is listening on http://localhost:${PORT}`);
